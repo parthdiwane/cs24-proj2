@@ -13,6 +13,7 @@
 #include <set>
 #include <queue>
 #include <sstream>
+#include <chrono>
 using namespace std;
 
 #include "utilities.h"
@@ -65,9 +66,8 @@ int main(int argc, char** argv){
         }
     }
 
-    //  For each prefix,
-    //  Find all movies that have that prefix and store them in an appropriate data structure
-    //  If no movie with that prefix exists print the following message
+    auto start = chrono::high_resolution_clock::now(); // start timer
+
     for(const string& prefix : prefixes) {
         vector<pair<string, double>> res = findMoviePref(movies, prefix);
         if(res.empty()) {
@@ -89,7 +89,30 @@ int main(int argc, char** argv){
     return 0;
 }
 
-/* Add your run time analysis for part 3 of the assignment here as commented block*/
+/* 
+    the lower bound function has a time complexity of log(n) as we need to find the first value with a prefix of p since a map uses a balanced tree like structure it would take logn to worst time
+    we need to go through all m prefixes that match with prefix p which would be o(m)
+    we need to sort in decending order which would be o(mlogm) as the sort function does a linear log sort
+
+    time function: f(n,m) = logn + m + mlogm
+    overall time complexity: O(log(n) + mlog(m))
+    space complexity: O(m)
+
+    times in ms: 
+    input_20_random.csv - 51 ms
+    input_100_random.csv - 56 ms 
+    input_1000_random.csv - 59 ms
+    input_76920_random.csv - 225 ms
+
+    Trend: as the number of entires/rows in the csv increase the time also increases
+
+
+    space complexity: 
+    O(m) where m is number of words in n with prefix p this is also the size of the map
+
+    1. I think I achived a relativly low space complexity O(m) is not that bad for a map (this is only for part 2) if we consider the over all alg then the space complexity is O(n + m) since we are going to store all n elements in the csv into a vector and then store only m of the n elements with prefix p in the map, if we consider this then my space complexity is not very good since we would double count some of the entires again (as we would add n elements to the vector and since m is a subset of the n elemnets we would add m elements of the n in the map, which is a red black tree).
+
+*/
 
 bool parseLine(string &line, string &movieName, double &movieRating) {
     int commaIndex = line.find_last_of(",");
