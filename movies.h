@@ -11,4 +11,5 @@ using namespace std;
 
 
 void printMovies(const map<string, double> & movies);
+vector<pair<string, double>> findMoviePref(const map<string, double> & movies, const string & prefix);
 #endif

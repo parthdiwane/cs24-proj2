@@ -68,12 +68,24 @@ int main(int argc, char** argv){
     //  For each prefix,
     //  Find all movies that have that prefix and store them in an appropriate data structure
     //  If no movie with that prefix exists print the following message
-    cout << "No movies found with prefix "<<"<replace with prefix>" << endl;
+    for(const string& prefix : prefixes) {
+        vector<pair<string, double>> res = findMoviePref(movies, prefix);
+        if(res.empty()) {
+             cout << "No movies found with prefix "<< prefix << endl;
+        } else {
+            for (const auto& m : res) {
+                cout << m.first << ", " << m.second << endl;
+            }
+        }
+        cout << endl;
+    }
 
-    //  For each prefix,
-    //  Print the highest rated movie with that prefix if it exists.
-    cout << "Best movie with prefix " << "<replace with prefix>" << " is: " << "replace with movie name" << " with rating " << std::fixed << std::setprecision(1) << "replace with movie rating" << endl;
-
+   for(const string & prefix: prefixes) {
+    vector<pair<string, double>> res = findMoviePref(movies, prefix);
+    if(!res.empty()) {
+        cout << "Best movie with prefix " << prefix << " is: " << res[0].first << " with rating "  << fixed << setprecision(1) << res[0].second << endl;
+        }
+    }
     return 0;
 }
 
