@@ -76,8 +76,8 @@ int main(int argc, char** argv){
             for (const auto& m : res) {
                 cout << m.first << ", " << m.second << endl;
             }
+            cout << endl;
         }
-        cout << endl;
     }
 
    for(const string & prefix: prefixes) {
